@@ -85,20 +85,20 @@ class ProtocalHandler(Thread):
 	
 	def run(self):
 		
-		msg_li['E', 'E', 'E']
-		init = waitforinit(self)
+		msg_li = ['E', 'E', 'E']
+		init = self.waitforinit()
 		if init != "O":
 			self.csock.close()
 			return
 		# end if
-		msg_li[0] = waitfornumber(self)
-		msg_li[2] = waitfornumber(self)
-		msg_li[1] = waitforop(self)
+		msg_li[0] = self.waitfornumber()
+		msg_li[2] = self.waitfornumber()
+		msg_li[1] = self.waitforop()
 		
 		if "E" not in msg_li:
 			
 			expr = ''.join(msg_li)
-			finalresp = str(eval(expr)).append("\n")
+			finalresp = str(eval(expr)) + "\n"
 			self.csock.send(finalresp)
 		# endif
 		self.csock.close()

@@ -19,6 +19,9 @@ print "Connecting to: " + remoteaddr + " " + str(port)
 clisock.connect((remoteaddr, port))
 clisock.send("INIT\n")
 msg = clisock.recv(BUFFSIZE)
+if msg.strip() == "BUSY":
+	print "Server Busy"
+	exit(0)
 if msg.strip() != "OK":
 	print "Init Error"
 	exit(-1)

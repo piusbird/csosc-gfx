@@ -44,7 +44,7 @@ class ProtocalHandler(Thread):
 				self.junk = 0
 				return proced_msg
 			else:
-				self.csock.send("NCK\n")
+				self.csock.send("NACK\n")
 				self.junk += 1
 			# end if-else
 		# end while
@@ -53,10 +53,13 @@ class ProtocalHandler(Thread):
 	
 	def waitforinit(self):
 		
+		if active_count() > MAX_CONNS - 1:
+			self.csock.send("BUSY\n")
+			return ERR_STATE
 		while self.junk < ALLOWED_JUNK:
 			
 			msg = self.csock.recv(BUFFSIZE)
-			proced_msg = msg.strip()
+			proced_msg = msg.strip().upper()
 			
 			if proced_msg == "INIT": # Accepting state
 			
@@ -65,7 +68,7 @@ class ProtocalHandler(Thread):
 				return OK_STATE
 			else:
 			
-				self.csock.send("NCK\n")
+				self.csock.send("NACK\n")
 				self.junk += 1
 			# end if-else
 		# end while
@@ -77,7 +80,7 @@ class ProtocalHandler(Thread):
 		while self.junk < ALLOWED_JUNK:
 		
 			msg = self.csock.recv(BUFFSIZE)
-			proced_msg = msg.strip()
+			proced_msg = msg.strip().upper()
 			
 			if proced_msg in supported_ops: # hashmap lookup
 				
@@ -85,7 +88,7 @@ class ProtocalHandler(Thread):
 				# return the value at that key 
 				
 			else:
-				self.csock.send("NCK\n")
+				self.csock.send("NACK\n")
 				self.junk += 1
 			# end if-else
 		# end while

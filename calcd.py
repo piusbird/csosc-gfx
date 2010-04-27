@@ -8,8 +8,7 @@ from calcsrv.ProtocalHandler import ProtocalHandler
 from calcsrv.misc import NullDevice
 import os
 import sys
-
-MAX_CONNS = 5 
+ 
 
 print "Calcd 0.0.1 Starting...\n"
 srvsock = socket(AF_INET, SOCK_STREAM)

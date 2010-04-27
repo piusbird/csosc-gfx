@@ -20,15 +20,19 @@ print "Opening log file\n"
 fp = open("calcd.log", "a")
 print "Forking..."
 
-pid = os.fork()
+pid = os.fork() ## Hmmm this looks an awful lot like... C
 
 if pid:
 	os._exit(0) # kill the parent
 else:
+	## directions say this will stop exceptions while
+	## deamonized. Which would be bad
 	os.setpgrp()
 	os.umask(0)
-	print os.getpid()
-	sys.stdin.close()
+	
+	print os.getpid() # to aid in stoping the server
+	# Run silent, run deep
+	sys.stdin.close() 
 	sys.stdout = NullDevice()
 	sys.stderr = NullDevice()
 		

@@ -73,7 +73,6 @@ class ProtocalHandler(Thread):
 			
 			if proced_msg in supported_ops:
 				
-				self.csock.send("OK\n")
 				return supported_ops[proced_msg]
 			else:
 				self.csock.send("NCK\n")
